@@ -4,9 +4,21 @@ namespace App\Entity;
 
 use App\Repository\UtilisateurRepository;
 use Doctrine\ORM\Mapping as ORM;
+use Doctrine\ORM\Mapping\DiscriminatorMap;
+use Doctrine\ORM\Mapping\Entity;
+use Doctrine\ORM\Mapping\InheritanceType;
 
 #[ORM\Entity(repositoryClass: UtilisateurRepository::class)]
-class Utilisateur
+// #[InheritanceType("SINGLE_TABLE")]
+// #[DiscriminatorColumn(name="type", type="string")]
+// #[DiscriminatorMap("hebergeur" = "Hebergeur", "locataire" = "Locataire")]
+
+/**
+ * @InheritanceType("SINGLE_TABLE")
+ * @DiscriminatorColumn(name="discr", type="string")
+ * @DiscriminatorMap({"hebergeur" = "Hebergeur", "locataire" = "Locataire"})
+ */
+abstract class Utilisateur
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
@@ -19,7 +31,7 @@ class Utilisateur
     #[ORM\Column(type: 'string', length: 255)]
     private $prenom;
 
-    #[ORM\Column(type: 'integer', nullable: true)]
+    #[ORM\Column(type: 'string', nullable: true)]
     private $telephone;
 
     #[ORM\Column(type: 'json')]
@@ -57,12 +69,12 @@ class Utilisateur
         return $this;
     }
 
-    public function getTelephone(): ?int
+    public function getTelephone(): ?string
     {
         return $this->telephone;
     }
 
-    public function setTelephone(?int $telephone): self
+    public function setTelephone(?string $telephone): self
     {
         $this->telephone = $telephone;
 

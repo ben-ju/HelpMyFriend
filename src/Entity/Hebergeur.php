@@ -8,7 +8,7 @@ use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: HebergeurRepository::class)]
-class Hebergeur
+class Hebergeur extends Utilisateur
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]

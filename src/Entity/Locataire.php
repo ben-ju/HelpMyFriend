@@ -6,7 +6,7 @@ use App\Repository\LocataireRepository;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: LocataireRepository::class)]
-class Locataire
+class Locataire extends Utilisateur
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]

@@ -7,4 +7,10 @@
 /public/bundles/
 /var/
 /vendor/
+/bin/
+/.env
+/.composer.lock
+/migrations/
+/config/
+
 ###< symfony/framework-bundle ###
