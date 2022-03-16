@@ -8,7 +8,7 @@ use Doctrine\Common\DataFixtures\DependentFixtureInterface;
 use Doctrine\Persistence\ObjectManager;
 use Faker;
 
-class HebergeurFixtures extends Fixture
+class HebergeurFixtures extends Fixture implements DependentFixtureInterface
 {
 
 
@@ -26,15 +26,11 @@ class HebergeurFixtures extends Fixture
         for ($i = 0; $i < 20; $i++) {
             $faker = Faker\Factory::create();
             $hebergeur = new Hebergeur();
-            $hebergeur->setNom($faker->name);
-            $hebergeur->setEmail($faker->email);
             $hebergeur->setAdresse($faker->address);
             $hebergeur->setVille($faker->city);
             $hebergeur->setCodePostal($faker->postcode);
-            $hebergeur->setTelephone($faker->phoneNumber);
-            $hebergeur->setRoles(['role' => 'hebergeur']);
 
-            // $hebergeur->setIdUtilisateurFk($this->getReference(UtilisateurFixtures::FOREIGN_KEY_HEBERGEUR));
+            $hebergeur->setIdUtilisateurFk($this->getReference('foreign_key' . $i));
 
 
             $manager->persist($hebergeur);
@@ -45,10 +41,10 @@ class HebergeurFixtures extends Fixture
 
 
 
-    /*  public function getDependencies()
+    public function getDependencies()
     {
         return [
             UtilisateurFixtures::class
         ];
-    }*/
+    }
 }

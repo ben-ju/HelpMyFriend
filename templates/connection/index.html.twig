@@ -1,0 +1,9 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello ConnectionController!
+{% endblock %}
+
+{% block body %}
+
+	{{ include('partials/layout/_flash_messages.html.twig') }}
+	{{ form(monFormulaire) }}{% endblock %}

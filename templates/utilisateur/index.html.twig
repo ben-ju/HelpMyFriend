@@ -1,20 +1,13 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Hello UtilisateurController!{% endblock %}
+{% block title %}Inscription - Choisissez votre type d'inscription
+{% endblock %}
 
 {% block body %}
-<style>
-    .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
-    .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
-</style>
-
-<div class="example-wrapper">
-    <h1>Hello {{ controller_name }}! ✅</h1>
-
-    This friendly message is coming from:
-    <ul>
-        <li>Your controller at <code><a href="{{ 'C:/Users/test/Documents/Alternance 3WA/Cours/AGILE/dev/help_my_friend/src/Controller/UtilisateurController.php'|file_link(0) }}">src/Controller/UtilisateurController.php</a></code></li>
-        <li>Your template at <code><a href="{{ 'C:/Users/test/Documents/Alternance 3WA/Cours/AGILE/dev/help_my_friend/templates/utilisateur/index.html.twig'|file_link(0) }}">templates/utilisateur/index.html.twig</a></code></li>
-    </ul>
-</div>
+	<div class="p-5">
+		<h1 class="display-h5">Choisissez votre type d'inscription</h1>
+		<p>Afin de répondre au mieux à la demande de migrants Ukrainiens dû à la situation actuelle dans ce pays, nous proposons de faire les entremetteurs entre les migrants et les hébergeurs</p>
+		<a href="/locataire" class="btn btn-warning btn-lg disabled pe-auto" role="button" aria-disabled="true">Je cherche un logement temporaire en France</a>
+		<a href="/hebergeur" class="btn btn-warning btn-lg disabled pe-auto" role="button" aria-disabled="true">Je propose mon logement en France</a>
+	</div>
 {% endblock %}

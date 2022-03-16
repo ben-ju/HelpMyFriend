@@ -1,0 +1,69 @@
+{#
+@var type : string
+-> 1 choix de style différent : icon
+-> 6 choix de type différents : primary, danger, warning, success, info, secondary
+formatage : style@type ou type
+exemple : icon@primary ou primary
+#}
+
+{% for type, messages in app.flashes %}
+	{% if '@' in type %}
+		{% set params = type|split('@') %}
+		{% set style = params[0] %}
+		{% set type = params[1] %}
+		{% if 'icon' in style %}
+			{% if type is same as('primary') %}
+				{% set icon = 'far fa-bell' %}
+			{% elseif type is same as('danger') %}
+				{% set icon = 'fas fa-bomb' %}
+			{% elseif type is same as('warning') %}
+				{% set icon = 'fas fa-exclamation-circle' %}
+			{% elseif type is same as('success') %}
+				{% set icon = 'far fa-thumbs-up' %}
+			{% elseif type is same as('info') %}
+				{% set icon = 'fas fa-info-circle' %}
+			{% elseif type is same as('secondary') %}
+				{% set icon = 'far fa-star' %}
+			{% endif %}
+		{% endif %}
+	{% endif %}
+	{% for message in messages %}
+		{% if style is defined %}
+			{% if style is same as('icon') %}
+				<div class="alert alert-{{ type }} alert-dismissible fade show">
+					<div class="text-{{ type }}">
+						<i class="far {{ icon }}"></i>
+						{{ message|trans }}
+					</div>
+					<button type="button" class="close" data-dismiss="alert">
+						<span>
+							<i class="fas fa-times"></i>
+						</span>
+					</button>
+				</div>
+			{% else %}
+				<div class="alert alert-{{ type }} alert-dismissible fade show">
+					<div class="text-{{ type }}">
+						{{ message|trans }}
+					</div>
+					<button type="button" class="close" data-dismiss="alert">
+						<span>
+							<i class="fas fa-times"></i>
+						</span>
+					</button>
+				</div>
+			{% endif %}
+		{% else %}
+			<div class="alert alert-{{ type }} alert-dismissible fade show">
+				<div class="text-{{ type }}">
+					{{ message|trans }}
+				</div>
+				<button type="button" class="close" data-dismiss="alert">
+					<span>
+						<i class="fas fa-times"></i>
+					</span>
+				</button>
+			</div>
+		{% endif %}
+	{% endfor %}
+{% endfor %}

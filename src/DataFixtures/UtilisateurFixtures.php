@@ -3,6 +3,7 @@
 namespace App\DataFixtures;
 
 use App\Entity\Hebergeur;
+use App\Entity\Utilisateur;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Persistence\ObjectManager;
 use Faker;
@@ -18,15 +19,15 @@ class UtilisateurFixtures extends Fixture
 
         for ($i = 0; $i < 20; $i++) {
             $faker = Faker\Factory::create();
-            $hebergeur = new Hebergeur();
-            $hebergeur->setNom($faker->name);
-            $hebergeur->setPrenom($faker->lastName);
-            $hebergeur->setEmail($faker->email);
-            $hebergeur->setTelephone($faker->phoneNumber);
-            $hebergeur->setRoles(['role' => 'hebergeur']);
-            //$this->setReference(self::FOREIGN_KEY_HEBERGEUR, $hebergeur);
+            $user = new Utilisateur();
+            $user->setNom($faker->firstName);
+            $user->setPrenom($faker->lastName);
+            $user->setEmail($faker->email);
+            $user->setTelephone($faker->phoneNumber);
+            $user->setRoles(['role' => 'hebergeur']);
+            $this->setReference('foreign_key' . $i, $user);
 
-            $manager->persist($hebergeur);
+            $manager->persist($user);
         }
 
         $manager->flush();
