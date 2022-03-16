@@ -46,7 +46,7 @@ class AppartController extends AbstractController
             $this->createAppart($appart, $doctrine);
         }
 
-        return $this->render('hebergeur/index.html.twig', [
+        return $this->render('appart/index.html.twig', [
             'monFormulaire' => $appartForm->createView(),
         ]);
     }

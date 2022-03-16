@@ -6,7 +6,7 @@ use App\Repository\LocataireRepository;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: LocataireRepository::class)]
-class Locataire extends Utilisateur
+class Locataire
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
@@ -20,7 +20,7 @@ class Locataire extends Utilisateur
     #[ORM\JoinColumn(nullable: false)]
     private $id_utilisateur_fk;
 
-    #[ORM\ManyToOne(targetEntity: Groupe::class, inversedBy: 'locataires')]
+    #[ORM\ManyToOne(targetEntity: Groupe::class, cascade: ['persist', 'remove'])]
     #[ORM\JoinColumn(nullable: false)]
     private $id_groupe_fk;
 

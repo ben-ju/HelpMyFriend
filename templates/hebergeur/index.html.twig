@@ -4,6 +4,13 @@
 {% endblock %}
 
 {% block body %}
-	<h1 class="display-5">Inscription d'un nouvel hébergeur</h1>
-	{{ include('partials/layout/_flash_messages.html.twig') }}
-	{{ form(monFormulaire) }}{% endblock %}
+	<div class="row p-5 justify-content-center">
+		<div class="col-8">
+			<h1 class="display-5">Inscription d'un nouvel hébergeur</h1>
+			<div>
+				{{ include('partials/layout/_flash_messages.html.twig') }}
+				{{ form(monFormulaire) }}
+				</div>
+			</div>
+		</div>
+	{% endblock %}
