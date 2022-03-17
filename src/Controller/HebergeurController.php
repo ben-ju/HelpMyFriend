@@ -8,7 +8,10 @@ use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
+use Symfony\Component\Security\Core\User\UserInterface;
 
 class HebergeurController extends AbstractController
 {
@@ -21,11 +24,11 @@ class HebergeurController extends AbstractController
     }*/
 
 
-    private function createHebergeur(Hebergeur $appart, ManagerRegistry $doctrine)
+    private function createHebergeur(Hebergeur $hebergeur, ManagerRegistry $doctrine)
     {
 
         $em = $doctrine->getManager();
-        $em->persist($appart);
+        $em->persist($hebergeur);
         $em->flush();
     }
 
@@ -42,6 +45,20 @@ class HebergeurController extends AbstractController
         $hebergeurForm->handleRequest($request);
 
         if ($hebergeurForm->isSubmitted() && $hebergeurForm->isValid()) {
+
+            /*  $plaintextPassword = $request->request->get('password');
+
+            // hash the password (based on the security.yaml config for the $user class)
+            $hashedPassword = $passwordHasher->hashPassword(
+                $hebergeur,
+                $plaintextPassword
+            );
+            $hebergeur->setPassword($hashedPassword);
+*/
+
+            /* $hashedPassword = password_hash($request->request->get('password'), PASSWORD_DEFAULT);
+            $hebergeur->setPassword($hashedPassword);*/
+
             $hebergeur = $hebergeurForm->getData();
             $this->createHebergeur($hebergeur, $doctrine);
             $this->addFlash("success", "Inscription hébergeur effectuée");

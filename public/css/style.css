@@ -7,13 +7,7 @@
     object-fit: cover;
 }
 
-div.alert-success {
-    padding: 1%;
-    border: 1px solid #336600;
-    background-color: #00ff99;
-    color: #336600;
-    margin: 1%;
-}
+
 .example-wrapper {
     margin: 1em auto;
     max-width: 800px;

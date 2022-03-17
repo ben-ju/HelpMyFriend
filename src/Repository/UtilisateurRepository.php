@@ -60,17 +60,23 @@ class UtilisateurRepository extends ServiceEntityRepository
             ->getResult()
         ;
     }
-    */
-
-    /*
-    public function findOneBySomeField($value): ?Utilisateur
+  */
+    public function findOneByEmail(Utilisateur $entity): ?Utilisateur
     {
         return $this->createQueryBuilder('u')
-            ->andWhere('u.exampleField = :val')
-            ->setParameter('val', $value)
+            ->andWhere('u.email = :val')
+            ->setParameter('val', $entity->getEmail())
             ->getQuery()
-            ->getOneOrNullResult()
-        ;
+            ->getOneOrNullResult();
     }
-    */
+
+
+    public function findOneByMdp(Utilisateur $entity): ?Utilisateur
+    {
+        return $this->createQueryBuilder('u')
+            ->andWhere('u.password = :val')
+            ->setParameter('val', $entity->getPassword())
+            ->getQuery()
+            ->getOneOrNullResult();
+    }
 }
