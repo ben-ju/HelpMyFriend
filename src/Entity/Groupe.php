@@ -18,10 +18,10 @@ class Groupe
     #[ORM\Column(type: 'string', length: 255)]
     private $nom;
 
-    #[ORM\OneToMany(mappedBy: 'id_groupe_fk', targetEntity: Locataire::class, orphanRemoval: true)]
+    #[ORM\OneToMany(mappedBy: 'id_groupe_fk', targetEntity: Locataire::class, cascade: ['persist', 'remove'])]
     private $locataires;
 
-    #[ORM\OneToMany(mappedBy: 'id_groupe_fk', targetEntity: Reservation::class, orphanRemoval: true)]
+    #[ORM\OneToMany(mappedBy: 'id_groupe_fk', targetEntity: Reservation::class, cascade: ['persist', 'remove'])]
     private $reservations;
 
     public function __construct()
@@ -105,5 +105,9 @@ class Groupe
         }
 
         return $this;
+    }
+    public function __toString()
+    {
+        return $this->id;
     }
 }
