@@ -20,7 +20,9 @@ class HebergeurForm extends AbstractType
             ->add('adresse', TextType::class)
             ->add('ville', TextType::class)
             ->add('code_postal', TextType::class)
-            ->add('submit', SubmitType::class);
+            ->add('submit', SubmitType::class, [
+                'label' => 'Enregistrer mon inscription'
+            ]);
     }
 
     public function configureOptions(OptionsResolver $resolver): void

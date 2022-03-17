@@ -21,7 +21,9 @@ class LocataireForm extends AbstractType
             ->add('id_utilisateur_fk', UtilisateurFormType::class, [
                 'label' => false
             ])
-            ->add('submit', SubmitType::class);;
+            ->add('submit', SubmitType::class, [
+                'label' => 'Enregistrer mon inscription'
+            ]);
     }
 
     public function configureOptions(OptionsResolver $resolver): void

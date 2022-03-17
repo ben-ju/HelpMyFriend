@@ -4,13 +4,24 @@
 {% endblock %}
 
 {% block body %}
-	<div class="row ustify-content-center">
+	<div class="row justify-content-center">
 		<div class="p-0 text-center">
+
 			<img src="https://images.pexels.com/photos/11421332/pexels-photo-11421332.jpeg" width="100%" height="auto" id="banner"/>
 			<h1 class="display-5 p-5 text-center my-3">Bienvenue sur Help My Friend</h1>
 			<a href="/locataire" class="btn btn-warning btn-lg disabled pe-auto" role="button" aria-disabled="true">Je cherche un logement temporaire en France</a>
-			<a href="/hebergeur" class="btn btn-warning btn-lg disabled pe-auto" role="button" aria-disabled="true">Je propose mon logement en France</a>
+			<a href="/appart" class="btn btn-warning btn-lg disabled pe-auto" role="button" aria-disabled="true">Je propose mon logement en France</a>
 			{{ include('partials/layout/_flash_messages.html.twig') }}
+
+		</div>
+	</div>
+	<div class="container">
+		<div class="row justify-content-center p-5">
+			<div class="col-4"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/2/24/Gouvernement_fran%C3%A7ais.svg/langfr-330px-Gouvernement_fran%C3%A7ais.svg.png" class="img-fluid"></div>
+			<div class="col-8">
+				<p class="p-5">Help My Friend est un service permettant dans mettre en relation les réguié.e.s Ukrainien.nes et les personnes souhaitant héberger ses nouveaux arrivants temporairement. En partenariat avec le Gouvernement français, nous vous trouvons les hébergements et les personnes Ukrainiennes qui vous conviennent.
+				</p>
+			</div>
 		</div>
 	</div>
 {% endblock %}

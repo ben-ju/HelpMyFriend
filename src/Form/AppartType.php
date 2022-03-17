@@ -23,7 +23,9 @@ class AppartType extends AbstractType
                 'class' => Hebergeur::class,
                 'choice_label' => 'id_utilisateur_fk',
             ])
-            ->add('submit', SubmitType::class)
+            ->add('submit', SubmitType::class, [
+                'label' => 'Ajouter mon hébergement'
+            ])
             ->getForm();
 
         // ->add('id_utilisateur_fk', ChoiceType::class, [
