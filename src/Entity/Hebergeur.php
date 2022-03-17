@@ -8,7 +8,7 @@ use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: HebergeurRepository::class)]
-class Hebergeur extends Utilisateur
+class Hebergeur
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
@@ -35,6 +35,9 @@ class Hebergeur extends Utilisateur
     {
         $this->apparts = new ArrayCollection();
     }
+
+
+
 
     public function getId(): ?int
     {
@@ -117,5 +120,10 @@ class Hebergeur extends Utilisateur
         }
 
         return $this;
+    }
+
+    public function __toString()
+    {
+        return $this->id;
     }
 }

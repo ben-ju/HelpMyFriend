@@ -1,0 +1,16 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Inscription d'un nouveau réfugié
+{% endblock %}
+
+{% block body %}
+	<div class="row p-5 justify-content-center">
+		<div class="col-8">
+			<h1 class="display-5">Inscription d'un nouveau réfugié</h1>
+			<div>
+				{{ include('partials/layout/_flash_messages.html.twig') }}
+				{{ form(monFormulaire) }}
+				</div>
+			</div>
+		</div>
+	{% endblock %}

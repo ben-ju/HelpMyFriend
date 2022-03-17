@@ -4,21 +4,10 @@ namespace App\Entity;
 
 use App\Repository\UtilisateurRepository;
 use Doctrine\ORM\Mapping as ORM;
-use Doctrine\ORM\Mapping\DiscriminatorMap;
-use Doctrine\ORM\Mapping\Entity;
-use Doctrine\ORM\Mapping\InheritanceType;
 
 #[ORM\Entity(repositoryClass: UtilisateurRepository::class)]
-// #[InheritanceType("SINGLE_TABLE")]
-// #[DiscriminatorColumn(name="type", type="string")]
-// #[DiscriminatorMap("hebergeur" = "Hebergeur", "locataire" = "Locataire")]
 
-/**
- * @InheritanceType("SINGLE_TABLE")
- * @DiscriminatorColumn(name="discr", type="string")
- * @DiscriminatorMap({"hebergeur" = "Hebergeur", "locataire" = "Locataire"})
- */
-abstract class Utilisateur
+class Utilisateur
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
@@ -35,10 +24,13 @@ abstract class Utilisateur
     private $telephone;
 
     #[ORM\Column(type: 'json')]
-    private $roles = [];
+    private $roles = ['ROLE_USER'];
 
     #[ORM\Column(type: 'string', length: 255, nullable: true)]
     private $email;
+
+    #[ORM\Column(type: 'string', length: 255)]
+    private $password;
 
     public function getId(): ?int
     {
@@ -103,5 +95,25 @@ abstract class Utilisateur
         $this->email = $email;
 
         return $this;
+    }
+
+    public function getPassword(): ?string
+    {
+        return $this->password;
+    }
+
+    public function setPassword(string $password): self
+    {
+        $this->password = $password;
+
+        return $this;
+    }
+
+
+
+
+    public function __toString()
+    {
+        return $this->id;
     }
 }

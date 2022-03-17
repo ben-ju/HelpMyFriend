@@ -40,10 +40,13 @@ class AppartController extends AbstractController
 
         if ($appartForm->isSubmitted() && $appartForm->isValid()) {
             $appart = $appartForm->getData();
+
+            $this->addFlash("success", "La location est prete");
+
             $this->createAppart($appart, $doctrine);
         }
 
-        return $this->render('base.html.twig', [
+        return $this->render('appart/index.html.twig', [
             'monFormulaire' => $appartForm->createView(),
         ]);
     }
