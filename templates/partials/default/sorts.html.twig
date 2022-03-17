@@ -1,0 +1,57 @@
+{# Cf templates/partials/grid/sorts.html.twig, version LMS #}
+
+{% import "macro.html.twig" as macros %}
+
+{% for key, col in cols %}
+    <div class="{{ col.classes_col|default('col') }} sorter label {{ col.classes|default('d-none d-lg-block') }}">
+        {% if col.disabled is defined and col.disabled %}
+            {{ col.label|raw }}
+        {% else %}
+            <a
+                href="{{ app.request.uri }}"
+                id="sort-by-{{ key|replace({':': '__'}) }}"
+                data-listing-enabled="{% if col.disabled is not defined or not col.disabled %}true{% else %}false{% endif %}"
+                data-listing-sort="{{ key }}"
+                data-listing-order="{% if(order == key and direction == 'ASC') %}DESC{% else %}ASC{% endif %}"
+            >
+
+                {% set col_icon = '<i class="fas fa-sort"></i>' %}
+                {% if order == key %}
+                    {% if direction == 'ASC' %}
+                        {% set col_icon = '<i class="fas fa-sort-up"></i>' %}
+                    {% else %}
+                        {% set col_icon = '<i class="fas fa-sort-down"></i>' %}
+                    {% endif %}
+                {% endif %}
+
+                {{ macros.label_text_nowrap(col.label|raw, col_icon|raw) }}
+            </a>
+        {% endif %}
+    </div>
+{% endfor %}
+{% set has_activated_item = 0 %}
+{% for key, col in cols %}
+    {% if col.disabled is not defined or not col.disabled %}
+        {% set has_activated_item = has_activated_item + 1 %}
+    {% endif %}
+{% endfor %}
+
+{% if has_activated_item %}
+    <div class="col d-block d-lg-none">
+        <div class="form-inline">
+            <div class="form-group w-100">
+                <label for="sort-by" class="label col-form-label">Triez par : </label>
+                <select name="sort-by" id="sort-by" class="custom-select sorter">
+                    <option value=""></option>
+                    {% for key, col in cols %}
+                        {% if col.disabled is not defined or not col.disabled %}
+                            <option {% if order == key %}selected{% endif %} value="{{ key|replace({':': '__'}) }}" id="sort-by-{{ key|replace({':': '__'}) }}">
+                                {{ col.label }}
+                            </option>
+                        {% endif %}
+                    {% endfor %}
+                </select>
+            </div>
+        </div>
+    </div>
+{% endif %}
