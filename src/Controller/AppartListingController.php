@@ -18,8 +18,8 @@ class AppartListingController extends ListingController
 
     const ALLOWED_SORTS = [
         ListingController::CUSTOM_ORDER_IDENTIFIER . '#',
-        'id_redmine',
-        'createdDate'
+        'id',
+        'ville'
     ];
 
     const QUERY_ALL = 'query_all';
@@ -29,7 +29,7 @@ class AppartListingController extends ListingController
     private $defaultOrderDirection;
 
 
-    private $entityManager;
+    private EntityManagerInterface $entityManager;
 
     public function __construct(EntityManagerInterface $entityManager)
     {
@@ -132,9 +132,9 @@ class AppartListingController extends ListingController
                 $customFilter = $field->getName();
 
                 // Est-ce que c'est un filtre custom ou spécial ?
-                if (strpos($field->getName(), parent::CUSTOM_FILTER_IDENTIFIER) === 0) {
+                if (str_starts_with($field->getName(), parent::CUSTOM_FILTER_IDENTIFIER)) {
                     $customFilter = substr($field->getName(), strlen(parent::CUSTOM_FILTER_IDENTIFIER));
-                } elseif (strpos($field->getName(), parent::SPECIAL_FILTER_IDENTIFIER) === 0) {
+                } elseif (str_starts_with($field->getName(), parent::SPECIAL_FILTER_IDENTIFIER)) {
                     $customFilter = substr($field->getName(), strlen(parent::SPECIAL_FILTER_IDENTIFIER));
                 }
 

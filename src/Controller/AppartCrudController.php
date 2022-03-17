@@ -32,7 +32,7 @@ class AppartCrudController extends AbstractController
         $decorate = AppartListingController::QUERY_ALL;
         $decorateParams = [];
 
-        $listingController->setDefaultOrder("createdDate", 'DESC');
+        $listingController->setDefaultOrder("id", 'DESC');
 
         $items = $listingController->getItemsFromRequest($request, $doctrine, $filtersForm, $filtersFormParams, $decorate, $decorateParams);
         return $this->render($this->templatesBase . 'index.html.twig', $items);

@@ -48,7 +48,7 @@ class FilterAppartType extends AbstractType
             ->add(ListingController::CUSTOM_FILTER_IDENTIFIER.'search', TextType::class, [
                 'label' => 'Rechercher un appart',
                 'required' => false,
-                'attr' => ['placeholder' => 'listing.filters.search_appart.label'],
+                'attr' => ['placeholder' => 'tapez une adresse'],
             ])
         ;
     }
