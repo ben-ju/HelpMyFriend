@@ -23,6 +23,7 @@ class UtilisateurFixtures extends Fixture
             $user->setNom($faker->firstName);
             $user->setPrenom($faker->lastName);
             $user->setEmail($faker->email);
+            $user->setPassword($faker->firstName);
             $user->setTelephone($faker->phoneNumber);
             $user->setRoles(['role' => 'hebergeur']);
             $this->setReference('foreign_key' . $i, $user);
