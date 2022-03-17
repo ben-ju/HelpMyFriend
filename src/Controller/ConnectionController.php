@@ -9,6 +9,8 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use App\Form\ConnectionType;
 use Doctrine\Persistence\ManagerRegistry;
+use Symfony\Component\HttpFoundation\Session\Session;
+use Symfony\Component\HttpFoundation\Session\Storage\PhpBridgeSessionStorage;
 
 class ConnectionController extends AbstractController
 {
@@ -30,6 +32,7 @@ class ConnectionController extends AbstractController
         return $this->render('connection/index.html.twig', [
             'controller_name' => 'ConnectionController',
             'monFormulaire' => $connectionForm->createView(),
+            'session_role' => $request->getSession()
         ]);
     }
 
@@ -41,6 +44,11 @@ class ConnectionController extends AbstractController
         if ($identification == []) {
             $this->addFlash("danger", "Votre mot de passe ou votre e-mail est incorrect");
         } else {
+
+            $session = new Session(new PhpBridgeSessionStorage());
+            $session->start();
+            $session->set('utilisateur', $infos['email']);
+            $session->set('role', 'ROLE_USER');
         }
     }
 }
