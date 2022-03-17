@@ -25,6 +25,7 @@ class UtilisateurFixtures extends Fixture
             $user->setEmail($faker->email);
             $user->setTelephone($faker->phoneNumber);
             $user->setRoles(['role' => 'hebergeur']);
+            $user->setPassword($faker->password);
             $this->setReference('foreign_key' . $i, $user);
 
             $manager->persist($user);
