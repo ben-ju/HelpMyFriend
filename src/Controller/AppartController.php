@@ -34,6 +34,7 @@ class AppartController extends AbstractController
     {
 
         $appart = new Appart();
+        $idUtilisateur = $request->getSession()->get('id_utilisateur');
 
         $appartForm = $this->createForm(AppartType::class);
         $appartForm->handleRequest($request);
@@ -41,7 +42,7 @@ class AppartController extends AbstractController
         if ($appartForm->isSubmitted() && $appartForm->isValid()) {
             $appart = $appartForm->getData();
 
-            $this->addFlash("success", "La location est enregistrée");
+            $this->addFlash("success", "La location est prête");
 
             $this->createAppart($appart, $doctrine);
         }

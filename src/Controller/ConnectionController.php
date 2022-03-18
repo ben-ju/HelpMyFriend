@@ -66,6 +66,7 @@ class ConnectionController extends AbstractController
             $session = new Session(new PhpBridgeSessionStorage());
             $session->start();
             $session->set('utilisateur', $infos['email']);
+            $session->set('id_utilisateur', $idUtilisateur);
             $session->set('role', $role);
         }
     }

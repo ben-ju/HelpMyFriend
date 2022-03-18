@@ -40,7 +40,9 @@ class AppartType extends AbstractType
     {
         $resolver->setDefaults([
             'data_class' => Appart::class,
-            'mapped' => false
+            'mapped' => false,
+            // 'id_utilisateur_fk' => false,
         ]);
+        // $resolver->setAllowedTypes('id_utilisateur_fk', 'array');
     }
 }
