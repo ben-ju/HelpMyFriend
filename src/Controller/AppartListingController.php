@@ -145,7 +145,9 @@ class AppartListingController extends ListingController
                         $value = $field->getData();
                         if (isset($value) && $value !== '') {
                             $query
-                                ->andWhere('main.ville LIKE :s')
+                                ->orWhere('main.ville LIKE :s')
+                                ->orWhere('main.code_postal LIKE :s')
+                                ->where('main.adresse LIKE :s')
                                 ->setParameter(':s', '%' . $value . '%');
 
                         }

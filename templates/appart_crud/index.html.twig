@@ -5,7 +5,7 @@
 
 {% block body_id 'appart-list' %}
 
-{% block title %}Gestion des Appartements{% endblock %}
+{% block title %}Gestion des Logements{% endblock %}
 
 {% block body %}
 
@@ -13,7 +13,7 @@
 	<div class="page-header">
 		<div class="row row-h align-items-center mb-4">
 			<div class="col-sm">
-				<h1 class="mb-0">Appartements</h1>
+				<h1 class="mb-0">Logements</h1>
 			</div>
 			<div class="col-sm-auto">
 				<div class="row row-sm row-sm-h align-items-center justify-content-center">
@@ -36,65 +36,31 @@
 	<div class="row row-md-h align-items-center pt-4 mb-3 mb-lg-0">
 		<div class="col-md col-lg-12">
 			<h2 class="mb-0">
-				<i class="far"></i> Liste des Appartement <span class="badge-pill badge-tertiary ml-2">{{ items.count() }}</span>
+				<i class="far"></i> Liste des Logements <span class="badge-pill badge-tertiary ml-2">{{ items.count() }}</span>
 			</h2>
 		</div>
-		{% if items is not empty %}
-			<div class="col-md col-lg-12">
-				<div class="pl-lg-3 pr-lg-3">
-					<div class="row align-items-end">
-						{% include 'partials/default/sorts.html.twig' with {
-							cols:       {
-								'ville': {'label': 'ville'},
-								'id': {'label': 'id'},
-							},
-							order:      listingForm.vars.value.order|default('id'),
-							direction:  listingForm.vars.value.direction|default('ASC')} %}
-						{{ macros.empty_ellipsis_button() }}
-					</div>
-				</div>
-			</div>
-		{% endif %}
-	</div>
-	{% if items is empty %}
-		<div class="empty-value">
-			<i>Aucun projet n\'a été trouvé
-			</i>
-		</div>
-	{% else %}
-		<div class="list-group list-group-flush">
-		{% for project in items %}
-			{% set menu_actions_list = [
-				{'type': 'view', 'title': 'Consulter/Editer les infos', 'path': path('project_edit', {id: project.id}) },
-				{'type': 'view', 'title': 'Supprimer', 'path': path('project_delete', {id: project.id}) }
-			] %}
-			</div>
-			<div class="list-group-item list-group-item-main-gray-light">
-				<div class="col-12 col-lg">
-					<div class="row row-h">
-						<div class="col">
-							<a href="{{ path('project_edit', {'id': project.id}) }}" class="link d-block">
-								{{ project.ville }}
-							</a>
-						</div>
-							<div class="col-lg{% if not project.id %} d-none d-lg-block{% endif %}">
-								{% if project.id %}
-									<div class="label d-lg-none mb-1">Id :</div>
-									<div class="d-flex align-items-center label">
-										<i class="text-size-16px mr-2"></i>
-										{{ project.id }}
-									</div>
-								{% endif %}
-							</div>
+	<div class="row row-cols-1 row-cols-md-3 g-4">
+		{% for appart in items %}
+			<div class="col">
+				<div class="card">
+					<img src="https://www.residence-nemea.com/upload/hotel_residence_universe/355/main/25347.jpg" class="card-img-top" alt="...">
+					<div class="card-body">
+						<h5 class="card-title">{{ appart.ville }}</h5>
 
-						<div class="col-auto d-none d-lg-block">
-							{{ macros.menu_actions(menu_actions_list) }}
-						</div>
+						<p class="card-text">{{ appart.adresse}}</p>
+						<p class="card-text">{{ appart.codePostal}}</p>
+						<p class="card-text">{{ appart.placesDisponibles }} places disponibles</p>
+						<p class="card-text">
+							<small class="text-muted">Disponible</small>
+
+						</p>
+						<a class="btn btn-outline-secondary" href="{{ path('app_appart_crud_show', {'id': appart.id}) }}">Details</a>
+
 					</div>
 				</div>
 			</div>
 		{% endfor %}
-	{% endif %}
+	</div>
 
 	{% if items|length > itemsPerPage %}
 		{% include 'partials/grid/paginate.html.twig' with {offset: listingForm.vars.value.offset|default(0)} %}
