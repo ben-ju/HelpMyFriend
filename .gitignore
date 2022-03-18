@@ -12,5 +12,5 @@
 /.composer.lock
 /migrations/
 /config/
-
+/.vscode/
 ###< symfony/framework-bundle ###
