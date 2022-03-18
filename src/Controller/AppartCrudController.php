@@ -4,6 +4,8 @@ namespace App\Controller;
 
 use App\Entity\Appart;
 use App\Entity\Groupe;
+use App\Form\Admin\Filter\FilterAppartType;
+use App\Form\Admin\ListingType;
 use App\Form\Appart1Type;
 use App\Entity\Reservation;
 use App\Form\ReservationType;
@@ -20,12 +22,26 @@ use Symfony\Component\Validator\Constraints\Length;
 #[Route('/appart/crud')]
 class AppartCrudController extends AbstractController
 {
+
+    private $templatesBase = 'appart_crud/';
+
+
     #[Route('/', name: 'app_appart_crud_index', methods: ['GET'])]
-    public function index(AppartRepository $appartRepository): Response
+    public function index(AppartRepository $appartRepository, Request $request, AppartListingController $listingController, ManagerRegistry $doctrine): Response
     {
-        return $this->render('appart_crud/index.html.twig', [
-            'apparts' => $appartRepository->findAll(),
-        ]);
+        $form = $this->createForm(ListingType::class, null, $options=[]);
+        $form->handleRequest($request);
+
+        $filtersForm = FilterAppartType::class;
+        $filtersFormParams = [];
+
+        $decorate = AppartListingController::QUERY_ALL;
+        $decorateParams = [];
+
+        $listingController->setDefaultOrder("id", 'DESC');
+
+        $items = $listingController->getItemsFromRequest($request, $doctrine, $filtersForm, $filtersFormParams, $decorate, $decorateParams);
+        return $this->render($this->templatesBase . 'index.html.twig', $items);
     }
 
     #[Route('/new', name: 'app_appart_crud_new', methods: ['GET', 'POST'])]
@@ -159,3 +175,5 @@ class AppartCrudController extends AbstractController
         );
     }
 }
+
+

@@ -1,0 +1,40 @@
+{% trans_default_domain 'admin' %}
+{% import "macro.html.twig" as macros %}
+
+{# Colonnes pour lesquelles on ne rajoute pas le suffixe '.label' #}
+{% set excludeTranslateLabel = ['created', 'updated'] %}
+{% set t = col|split('_custom_') %}
+{% if t|length > 1 %}
+	{% set customCol = t[1] %}
+{% else %}
+	{% set customCol = '' %}
+{% endif %}
+
+<a href="#" {% if customCol == '' %}onclick="return updateListing(['order','direction'],['{{ col }}','{% if(order == col and direction == 'ASC') %}DESC{% else %}ASC{% endif %}'])" {% endif %}>
+	{% set transSlug = col %}
+	{% if col_label is defined %}
+		{% set transSlug = col_label %}
+	{% endif %}
+	{% if customCol == '' %}
+		{% if col in excludeTranslateLabel %}
+			{% set transSlug = 'global.' ~ transSlug %}
+		{% else %}
+			{% set transSlug = domain ~ '.' ~ transSlug ~ '.label'%}
+		{% endif %}
+
+		{% set col_icon = '' %}
+		{% if order == col %}
+			{% if direction == 'ASC' %}
+				{% set col_icon = '<i class="fa fa-sort-up"></i>' %}
+			{% else %}
+				{% set col_icon = '<i class="fa fa-sort-down"></i>' %}
+			{% endif %}
+		{% else %}
+			{% set col_icon = '<i class="fa fa-sort"></i>' %}
+		{% endif %}
+
+		{{ macros.label_text_nowrap(label|default(transSlug|trans), col_icon) }}
+	{% else %}
+		{{ customCol }}
+	{% endif %}
+</a>
