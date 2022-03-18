@@ -5,47 +5,10 @@
 
 {% block body_id 'appart-list' %}
 
-{% block title %}Gestion des Logements{% endblock %}
+{% block title %}Gestion des Logements
+{% endblock %}
 
 {% block body %}
-<<<<<<< HEAD
-	<h1 align="center" class="p-2">Logement disponible</h1>
-
-	{#<table class=" table">
-			<thead>
-				<tr>
-					<th>Id</th>
-					<th>Ville</th>
-					<th>Adresse</th>
-					<th>Code_postal</th>
-					<th>Places_disponibles</th>
-					<th>actions</th>
-				</tr>
-			</thead>
-			<tbody>
-				{% for appart in apparts %}
-					<tr>
-						<td>{{ appart.id }}</td>
-						<td>{{ appart.ville }}</td>
-						<td>{{ appart.adresse }}</td>
-						<td>{{ appart.codePostal }}</td>
-						<td>{{ appart.placesDisponibles }}</td>
-						<td>
-							<a href="{{ path('app_appart_crud_show', {'id': appart.id}) }}">show</a>
-							<a href="{{ path('app_appart_crud_edit', {'id': appart.id}) }}">edit</a>
-						</td>
-					</tr>
-				{% else %}
-					<tr>
-						<td colspan="6">no records found</td>
-					</tr>
-				{% endfor %}
-			</tbody>
-		</table>#}
-
-	<div class="row row-cols-1 row-cols-md-3 g-4 p-5">
-		{% for appart in apparts %}
-=======
 
 	{{ form_start(listingForm) }}
 	<div class="page-header">
@@ -58,7 +21,8 @@
 					{% if listingForm.filters is defined %}
 						<div class="col-auto d-lg-none">
 							<a href="#bloc-filters" data-toggle="collapse" class="btn btn-main-gray-light">
-								<i class="fas fa-filter mr-2"></i> Filtrer par
+								<i class="fas fa-filter mr-2"></i>
+								Filtrer par
 							</a>
 						</div>
 					{% endif %}
@@ -74,42 +38,39 @@
 	<div class="row row-md-h align-items-center pt-4 mb-3 mb-lg-0">
 		<div class="col-md col-lg-12">
 			<h2 class="mb-0">
-				<i class="far"></i> Liste des Logements <span class="badge-pill badge-tertiary ml-2">{{ items.count() }}</span>
+				<i class="far"></i>
+				Liste des Logements
+				<span class="badge-pill badge-tertiary ml-2">{{ items.count() }}</span>
 			</h2>
 		</div>
-	<div class="row row-cols-1 row-cols-md-3 g-4">
-		{% for appart in items %}
->>>>>>> 76d8218816d0f8d3a213b0319d874a23231498d6
-			<div class="col">
-				<div class="card">
-					<img src="https://www.residence-nemea.com/upload/hotel_residence_universe/355/main/25347.jpg" class="card-img-top" alt="...">
-					<div class="card-body">
-						<h5 class="card-title">{{ appart.ville }}</h5>
+		<div class="row row-cols-1 row-cols-md-3 g-4">
+			{% for appart in items %}
+				<div class="col">
+					<div class="card">
+						<img src="https://www.residence-nemea.com/upload/hotel_residence_universe/355/main/25347.jpg" class="card-img-top" alt="...">
+						<div class="card-body">
+							<h5 class="card-title">{{ appart.ville }}</h5>
 
-						<p class="card-text">{{ appart.adresse}}</p>
-						<p class="card-text">{{ appart.codePostal}}</p>
-<<<<<<< HEAD
-						<p class="card-text">{{ appart.placesDisponibles }}
-							places disponibles</p>
-=======
-						<p class="card-text">{{ appart.placesDisponibles }} places disponibles</p>
->>>>>>> 76d8218816d0f8d3a213b0319d874a23231498d6
-						<p class="card-text">
-							<small class="text-muted">Disponible</small>
+							<p class="card-text">{{ appart.adresse}}</p>
+							<p class="card-text">{{ appart.codePostal}}</p>
+							<p class="card-text">{{ appart.placesDisponibles }}
+								places disponibles</p>
+							<p class="card-text">
+								<small class="text-muted">Disponible</small>
 
-						</p>
-						<a class="btn btn-outline-secondary" href="{{ path('app_appart_crud_show', {'id': appart.id}) }}">Details</a>
+							</p>
+							<a class="btn btn-outline-secondary" href="{{ path('app_appart_crud_show', {'id': appart.id}) }}">Details</a>
 
+						</div>
 					</div>
 				</div>
-			</div>
-		{% endfor %}
-	</div>
+			{% endfor %}
+		</div>
 
-	{% if items|length > itemsPerPage %}
-		{% include 'partials/grid/paginate.html.twig' with {offset: listingForm.vars.value.offset|default(0)} %}
-	{% endif %}
+		{% if items|length > itemsPerPage %}
+			{% include 'partials/grid/paginate.html.twig' with {offset: listingForm.vars.value.offset|default(0)} %}
+		{% endif %}
 
-	{{ form_end(listingForm) }}
+		{{ form_end(listingForm) }}
 
-{% endblock %}
+	{% endblock %}
