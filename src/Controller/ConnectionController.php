@@ -4,12 +4,12 @@ namespace App\Controller;
 
 use App\Entity\Hebergeur;
 use App\Entity\Utilisateur;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use App\Form\ConnectionType;
-use Doctrine\DBAL\Query;
 use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Component\HttpFoundation\Session\Session;
 use Symfony\Component\HttpFoundation\Session\Storage\PhpBridgeSessionStorage;
@@ -22,6 +22,11 @@ class ConnectionController extends AbstractController
     {
 
 
+        $current_session = $request->getSession();
+        if ($current_session->get('utilisateur') != null) {
+            return $this->redirect('/appart/crud');
+        }
+
         $connectionForm = $this->createForm(ConnectionType::class)->handleRequest($request);
 
         if ($connectionForm->isSubmitted() && $connectionForm->isValid()) {
@@ -30,12 +35,15 @@ class ConnectionController extends AbstractController
         }
 
 
-
-        return $this->render('connection/index.html.twig', [
-            'controller_name' => 'ConnectionController',
-            'monFormulaire' => $connectionForm->createView(),
-            'session_role' => $request->getSession()
-        ]);
+        if ($current_session->get('utilisateur') != null) {
+            return $this->redirect('/appart/crud');
+        } else {
+            return $this->render('connection/index.html.twig', [
+                'controller_name' => 'ConnectionController',
+                'monFormulaire' => $connectionForm->createView(),
+                'session_role' => $request->getSession()
+            ]);
+        }
     }
 
 
