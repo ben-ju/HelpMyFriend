@@ -41,7 +41,7 @@ class AppartController extends AbstractController
         if ($appartForm->isSubmitted() && $appartForm->isValid()) {
             $appart = $appartForm->getData();
 
-            $this->addFlash("success", "La location est prete");
+            $this->addFlash("success", "La location est enregistrée");
 
             $this->createAppart($appart, $doctrine);
         }

@@ -9,16 +9,16 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class LogoutController extends AbstractController
 {
-
     #[Route('/logout', name: 'app_logout')]
     public function index(Request $request): Response
     {
+        $current_session = $request->getSession();
+        $current_session->invalidate();
+        $this->addFlash("Warning", "Déconnexion réussie");
 
-        $request->getSession->clean();
-        $this->addFlash("warning", "Vous êtes déconnecté");
-        return $this->render('connection/index.html.twig', [
-            'controller_name' => 'ConnectionController',
-            'session_role' => $request->getSession()
+        // return $this->redirectToRoute('connection');
+        return $this->render('logout/index.html.twig', [
+            'controller_name' => 'LogoutController',
         ]);
     }
 }

@@ -12,11 +12,11 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class LocataireController extends AbstractController
 {
-    private function createLocataire(Locataire $appart, ManagerRegistry $doctrine)
+    private function createLocataire(Locataire $locataire, ManagerRegistry $doctrine)
     {
 
         $em = $doctrine->getManager();
-        $em->persist($appart);
+        $em->persist($locataire);
         $em->flush();
     }
 

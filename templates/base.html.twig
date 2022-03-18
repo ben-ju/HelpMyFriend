@@ -41,13 +41,16 @@
 							<li class="nav-item">
 								<a class="nav-link" aria-current="page" href="/">Accueil</a>
 							</li>
-							<li class="nav-item">
-								<a class="nav-link" href="/appart">Ajouter un hébergement</a>
-							</li>
+							{% if app.session.get('role') == 'hebergeur' %}
+								<li class="nav-item">
+									<a class="nav-link" href="/appart">Ajouter un hébergement</a>
+								</li>
+							{% endif %}
 							<li class="nav-item">
 								<a class="nav-link" href="/appart/crud">Tous les hébergements</a>
 							</li>
-							{% if app.session == null %}
+
+							{% if app.session.get('utilisateur') == null %}
 								<li class="nav-item">
 									<a class="nav-link" href="/connection">Connexion</a>
 								</li>
@@ -59,6 +62,7 @@
 									<a class="nav-link" href="/logout">Déconnexion</a>
 								</li>
 							{% endif %}
+
 
 						</ul>
 					</div>
