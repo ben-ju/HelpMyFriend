@@ -22,14 +22,16 @@ use Symfony\Component\Validator\Constraints\Length;
 #[Route('/appart/crud')]
 class AppartCrudController extends AbstractController
 {
-
     private $templatesBase = 'appart_crud/';
 
-
     #[Route('/', name: 'app_appart_crud_index', methods: ['GET'])]
-    public function index(AppartRepository $appartRepository, Request $request, AppartListingController $listingController, ManagerRegistry $doctrine): Response
-    {
-        $form = $this->createForm(ListingType::class, null, $options=[]);
+    public function index(
+        AppartRepository $appartRepository,
+        Request $request,
+        AppartListingController $listingController,
+        ManagerRegistry $doctrine
+    ): Response {
+        $form = $this->createForm(ListingType::class, null, $options = []);
         $form->handleRequest($request);
 
         $filtersForm = FilterAppartType::class;
@@ -38,9 +40,16 @@ class AppartCrudController extends AbstractController
         $decorate = AppartListingController::QUERY_ALL;
         $decorateParams = [];
 
-        $listingController->setDefaultOrder("id", 'DESC');
+        $listingController->setDefaultOrder('id', 'DESC');
 
-        $items = $listingController->getItemsFromRequest($request, $doctrine, $filtersForm, $filtersFormParams, $decorate, $decorateParams);
+        $items = $listingController->getItemsFromRequest(
+            $request,
+            $doctrine,
+            $filtersForm,
+            $filtersFormParams,
+            $decorate,
+            $decorateParams
+        );
         return $this->render($this->templatesBase . 'index.html.twig', $items);
     }
 
@@ -93,14 +102,23 @@ class AppartCrudController extends AbstractController
             $data = $request->request->all()['reservation'];
 
             $startDate = $data['date_debut'];
-            $inputStart = "{$startDate['day']}/{$startDate['month']}/{$startDate['year']}";
+            $inputStart = new DateTime();
+            $inputTimestamp = strtotime(
+                "{$startDate['day']}/{$startDate['month']}/{$startDate['year']}"
+            );
+            $inputStart->setTimestamp($inputTimestamp);
+
 
             $endDate = $data['date_fin'];
-            $inputEnd = "{$endDate['day']}/{$endDate['month']}/{$endDate['year']}";
+            $inputEnd = new DateTime();
+            $inputTimestamp = strtotime(
+                "{$endDate['day']}/{$endDate['month']}/{$endDate['year']}"
+            );
+            $inputEnd->setTimestamp($inputTimestamp);
 
             $reservation = new Reservation();
-            $reservation->setDateDebut(new DateTime($inputStart));
-            $reservation->setDateFin(new DateTime($inputEnd));
+            $reservation->setDateDebut($inputStart);
+            $reservation->setDateFin($inputEnd);
             $reservation->setIdAppartFk($appart);
 
             // no implementation of group / users
@@ -175,5 +193,3 @@ class AppartCrudController extends AbstractController
         );
     }
 }
-
-

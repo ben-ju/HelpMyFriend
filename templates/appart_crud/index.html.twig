@@ -62,10 +62,10 @@
 		{% endfor %}
 	</div>
 
-	{% if items|length > itemsPerPage %}
+{#	{% if items|length > itemsPerPage %}
 		{% include 'partials/grid/paginate.html.twig' with {offset: listingForm.vars.value.offset|default(0)} %}
 	{% endif %}
-
+#}
 	{{ form_end(listingForm) }}
 
 {% endblock %}
