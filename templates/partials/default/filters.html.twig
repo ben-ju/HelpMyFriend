@@ -1,0 +1,12 @@
+{% for filter in filters %}
+    {% if (filter.vars.name starts with constant('App\\Controller\\ListingController::SPECIAL_FILTER_IDENTIFIER')) %}
+        {# Destiné à être appelé ailleurs dans la vue #}
+    {% else %}
+        <div class="col-12 col-md">
+            <div class="form-inline">
+                {{ form_label(filter) }}
+                {{ form_widget(filter) }}
+            </div>
+        </div>
+    {% endif %}
+{% endfor %}

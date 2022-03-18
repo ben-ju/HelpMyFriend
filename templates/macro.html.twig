@@ -1,0 +1,150 @@
+{% macro label_text_nowrap(text, icon) %}
+    <span>
+        {# On traduit le label & je split en tableau divisé sur les espaces #}
+        {%- set text_label = text|split(' ') -%}
+        {# Je mets un span.text-nowrap pour que les chevron de "sort" ne soient pas seul sur une ligne #}
+        {%- for word in text_label -%}
+            {%- if loop.last -%}
+                <span class="text-nowrap">
+            {%- endif -%}
+            {{- word ~ ' ' -}}
+        {%- endfor -%}
+        {{ icon|raw }}
+        </span>
+    </span>
+{% endmacro %}
+
+{# Doit être placer en fin de colonne de triage pour permettre d'aligner le contenu du listing avec un menu d'actions #}
+{% macro empty_ellipsis_button(color = 'white', display_classes = 'd-none d-lg-block') %}
+    <div class="col-auto {{ display_classes }}">
+        <span class="btn btn-bubble btn-icon text-size-13px text-{{ color }} bg-{{ color }} border border-{{ color }} disabled" style="height: auto; width: auto;">
+            <i class="fas fa-ellipsis-h"></i>
+        </span>
+    </div>
+{% endmacro %}
+
+{#
+    {{ macros.menu_actions([
+        {'type': 'edit', 'title': 'Editer', 'path': path('project_edit', {id:project.id})},
+        {
+            // Pré-selection de l'icône, selon un type souvent présent : edit/duplicate/view/delete
+            'type': 'view',
+
+            // Le texte a afficher dans le lien
+            'title': 'Voir',
+
+            // L'url du lien (simple variable passée, pas de génération d'url dans la macro)
+            'path': path('base')
+
+            // Si l'icône n'est pas pré-enregistré, on peut le mettre directement (ne pas oublier "fas", "far" ou "fab")
+            (C'est : soit l'icône, soit le type, pas les deux)
+            'icon': 'fas fa-link'
+
+            // Permet l'affichage ou non de la ligne selon le droit de l'utilisateur
+            (N'importe quelle valeur/condition peut être passé, pas seulement "is_granted")
+            'is_granted': is_granted('ROLE_USER'),
+
+            // Possibilité d'ajouter des classes au lien (js-ajax par exemple...)
+            'path_class': 'js-ajax',
+
+            // Possibilité de passer d'autres attributs au lien
+            'path_option': ["data-confirm=", "Etes-vous sûre de vouloir supprimer ?"]
+        },
+    ]) }}
+#}
+{% macro menu_actions(items, has_notif = 0, header = false) %}
+    <div class="dropdown menu-actions">
+        {% if header %}
+            {{ header|raw }}
+        {% else %}
+            <a class="btn btn-bubble btn-icon btn-transparent dropdown-toggle" href="#" data-toggle="dropdown">
+                {% if has_notif %}
+                    <i class="fas fa-exclamation"></i>
+                {% else %}
+                    <i class="fas fa-ellipsis-h"></i>
+                {% endif %}
+            </a>
+        {% endif %}
+
+        <div class="dropdown-menu dropdown-menu-right">
+            {% for item in items %}
+
+                {% if (not (item.is_granted is defined)) or (item.is_granted is defined and item.is_granted) %}
+                    <a class="dropdown-item d-flex align-items-center{% if item.path_class is defined and item.path_class %} {{ item.path_class }}{% endif %}"
+                    {% if item.path_options is defined and item.path_options %}
+                        {% for name, option in item.path_options %}
+                            {{ name }}="{{ option }}"
+                        {% endfor %}
+                    {% endif %}
+                    href="{{ item.path }}">
+                    {% set icon = '' %}
+                    {% if item.icon is defined %}
+                        {% set icon = item.icon %}
+                    {% elseif item.type is defined %}
+                        {% if item.type == 'edit' %}
+                            {% set icon = 'fas fa-pen' %}
+                        {% elseif item.type == 'duplicate' %}
+                            {% set icon = 'fas fa-copy' %}
+                        {% elseif item.type == 'delete' %}
+                            {% set icon = 'fas fa-trash' %}
+                        {% elseif item.type == 'view' %}
+                            {% set icon = 'fas fa-eye' %}
+                        {% endif %}
+                    {% endif %}
+                    {% if icon %}<i class="{{ icon }} fa-lg text-secondary text-center mr-2" style="width: 20px;"></i>{% endif %}{{ item.title|raw }}
+                    </a>
+                {% endif %}
+            {% endfor %}
+        </div>
+    </div>
+{% endmacro %}
+
+{% macro switch_checkbox(title, id, checked = false, switch_case = '') %}
+    <div class="form-group mb-0">
+        <div class="custom-control custom-switch">
+            <input type="checkbox" id="uikit_{{ id }}" name="uikit[{{ id }}]" required="required" class="custom-control-input" value="1" {% if checked %}checked{% endif %}>
+            <label class="switch-custom custom-control-label required js-switch-content"{% if switch_case is defined and switch_case %}data-switch-class="{{ switch_case }}"{% endif %} data-switch-content="{{ id }}" for="uikit_{{ id }}">{{ title }}</label>
+        </div>
+    </div>
+{% endmacro %}
+
+{% macro project_avancement(project) %}
+    {% trans_default_domain 'admin' %}
+    {% set steps = constant('App\\Entity\\Project::STEPS') %}
+    <div class="list-linked-bubble list-linked-bubble-md">
+        <div class="row row-md flex-nowrap">
+            {% for key, step in steps %}
+                {% if step.timeline_is_visible %}
+                    {% set passed = false %}
+                    {% if project.initialStep > constant('App\\Entity\\Project::STEP_ACTION_PLAN') and not project.isActionPlanValidated and key ==  constant('App\\Entity\\Project::STEP_ACTION_PLAN')  %}
+                        {% set passed = true %}
+                    {% elseif   project.initialStep > constant('App\\Entity\\Project::STEP_PROJECT') and project.step2ValidateDate == null and key == constant('App\\Entity\\Project::STEP_PROJECT') %}
+                        {% set passed = true %}
+                    {% endif %}
+                    <div class="col linked-bubble-container{% if loop.first %} first{% endif %}">
+                        <div class="linked-bubble bubble{{ key <= project.step ? ' active' : '' }}{{ project.isStatusClosed ? ' closed' : '' }} {% if passed %} passed {% endif %}" {% if key == project.step %}data-toggle="tooltip" title="{{ ('project.steps.'~project.step)|trans }}"{% endif %}>
+                            {% if not project.isStatusClosed %}
+                                {% if key == constant('App\\Entity\\Project::STEP_ACTION_PLAN') and project.isActionPlanValidated %}
+                                    <i class="fas fa-check"></i>
+                                {% elseif key == constant('App\\Entity\\Project::STEP_PROJECT') and not project.step2ValidateDate == null  %}
+                                    <i class="fas fa-check"></i>
+                                {% elseif project.step > constant('App\\Entity\\Project::STEP_PROJECT') and key > constant('App\\Entity\\Project::STEP_PROJECT')  and project.step > key %}
+                                    <i class="fas fa-check"></i>
+                                {% endif%}
+                            {% endif %}
+                        </div>
+                    </div>
+                {% endif %}
+            {% endfor %}
+        </div>
+    </div>
+{% endmacro %}
+
+{% macro project_state(project) %}
+{% endmacro %}
+
+{% macro project_financial_help_state(help) %}
+{% endmacro %}
+
+{% macro render_menu_for_user_role(template) %}
+{% endmacro %}

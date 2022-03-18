@@ -1,9 +1,14 @@
-{% extends 'base.html.twig' %}
+{% extends "base.html.twig" %}
+{% import "macro.html.twig" as macros %}
 
-{% block title %}Logement
-{% endblock %}
+{% trans_default_domain 'admin' %}
+
+{% block body_id 'appart-list' %}
+
+{% block title %}Gestion des Logements{% endblock %}
 
 {% block body %}
+<<<<<<< HEAD
 	<h1 align="center" class="p-2">Logement disponible</h1>
 
 	{#<table class=" table">
@@ -40,6 +45,41 @@
 
 	<div class="row row-cols-1 row-cols-md-3 g-4 p-5">
 		{% for appart in apparts %}
+=======
+
+	{{ form_start(listingForm) }}
+	<div class="page-header">
+		<div class="row row-h align-items-center mb-4">
+			<div class="col-sm">
+				<h1 class="mb-0">Logements</h1>
+			</div>
+			<div class="col-sm-auto">
+				<div class="row row-sm row-sm-h align-items-center justify-content-center">
+					{% if listingForm.filters is defined %}
+						<div class="col-auto d-lg-none">
+							<a href="#bloc-filters" data-toggle="collapse" class="btn btn-main-gray-light">
+								<i class="fas fa-filter mr-2"></i> Filtrer par
+							</a>
+						</div>
+					{% endif %}
+				</div>
+			</div>
+		</div>
+	</div>
+
+	{% if listingForm.filters is defined %}
+		{% include 'partials/grid/filters.html.twig' with {filters: listingForm.filters} %}
+	{% endif %}
+
+	<div class="row row-md-h align-items-center pt-4 mb-3 mb-lg-0">
+		<div class="col-md col-lg-12">
+			<h2 class="mb-0">
+				<i class="far"></i> Liste des Logements <span class="badge-pill badge-tertiary ml-2">{{ items.count() }}</span>
+			</h2>
+		</div>
+	<div class="row row-cols-1 row-cols-md-3 g-4">
+		{% for appart in items %}
+>>>>>>> 76d8218816d0f8d3a213b0319d874a23231498d6
 			<div class="col">
 				<div class="card">
 					<img src="https://www.residence-nemea.com/upload/hotel_residence_universe/355/main/25347.jpg" class="card-img-top" alt="...">
@@ -48,8 +88,12 @@
 
 						<p class="card-text">{{ appart.adresse}}</p>
 						<p class="card-text">{{ appart.codePostal}}</p>
+<<<<<<< HEAD
 						<p class="card-text">{{ appart.placesDisponibles }}
 							places disponibles</p>
+=======
+						<p class="card-text">{{ appart.placesDisponibles }} places disponibles</p>
+>>>>>>> 76d8218816d0f8d3a213b0319d874a23231498d6
 						<p class="card-text">
 							<small class="text-muted">Disponible</small>
 
@@ -61,4 +105,11 @@
 			</div>
 		{% endfor %}
 	</div>
+
+	{% if items|length > itemsPerPage %}
+		{% include 'partials/grid/paginate.html.twig' with {offset: listingForm.vars.value.offset|default(0)} %}
+	{% endif %}
+
+	{{ form_end(listingForm) }}
+
 {% endblock %}
