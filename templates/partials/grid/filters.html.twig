@@ -1,0 +1,48 @@
+{% set show = '' %}
+{% set queries_parameters = [] %}
+{% if app.request.get('listing') %}
+    {% set queries_parameters = app.request.get('listing').filters %}
+{% endif %}
+{% for filter in filters %}
+    {% if filter.vars.value != '' and queries_parameters[filter.vars.name] is defined %}
+        {# iterable = is_array : cas d'un filtre avec choix multiple #}
+        {% if filter.vars.value is iterable %}
+            {% for value in filter.vars.value %}
+                {% if value != '' %}
+                    {% set show = 'show' %}
+                {% endif %}
+            {% endfor %}
+        {% else %}
+            {% set show = 'show' %}
+        {% endif %}
+    {% endif %}
+{% endfor %}
+<div class="{{ show }} d-lg-block collapse" id="bloc-filters">
+    <div class="bloc-filters-content pt-3 pt-lg-0">
+        <div class="row row-sm align-items-end">
+            {% for filter in filters %}
+                {% set col = 'col-lg' %}
+                {% if loop.last %}
+                    {% set col = 'col' %}
+                {% endif %}
+                {% if cols[loop.index0] is defined %}
+                    {% set col = cols[loop.index0] %}
+                {% endif %}
+                <div class="{{ col }}">
+                    {% include 'partials/grid/filter.html.twig' %}
+                </div>
+                {% if loop.last %}
+                    {% if show is not empty %}
+                        <div class="col-auto">
+                            <div class="form-group">
+                                <button class="btn btn-icon btn-tertiary do-reset-filters" title="Réinitialiser les filtres" data-toggle="tooltip" type="button">
+                                    <i class="fas fa-sync-alt"></i>
+                                </button>
+                            </div>
+                        </div>
+                    {% endif %}
+                {% endif %}
+            {% endfor %}
+        </div>
+    </div>
+</div>

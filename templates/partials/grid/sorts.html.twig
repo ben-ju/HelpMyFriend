@@ -1,0 +1,21 @@
+{% if cols_option is defined and cols_option %}
+
+        {% for name, col in cols %}
+            <div class="{% if col.class is defined and col.class %}{{ col.class }} col-lg {% endif %}{{ name|replace({'.': '_', ':': '_'}) }}">
+                {% set col_label = name %}
+                {% if col.label is defined %}
+                    {% set col_label = col.label %}
+                {% endif %}
+                {% include 'partials/grid/sort.html.twig' with {'col': name, 'col_label': col_label, 'order': order, 'direction': direction, 'domain': domain} only %}
+            </div>
+        {% endfor %}
+
+{% else %}
+    {% for col in cols %}
+
+                <div class="col-lg {{ col|replace({'.': '_', ':': '_'}) }}">
+                    {% include 'partials/grid/sort.html.twig' %}
+                </div>
+
+    {% endfor %}
+{% endif %}
