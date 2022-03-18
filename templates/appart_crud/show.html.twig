@@ -1,59 +1,67 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Logement{% endblock %}
-
-{% block body %}
-    <h1 align="center">Logement</h1>
-<div id="carouselExampleFade" class="carousel slide carousel-fade" data-bs-ride="carousel">
-  <div class="carousel-inner">
-    <div class="carousel-item active">
-      <img width="800px" height="500px" src="https://media.lesechos.com/api/v1/images/view/61b728368fe56f2a11726725/1280x720/070519160949-web-tete.jpg" class="d-block w-100" alt="...">
-    </div>
-    <div class="carousel-item">
-      <img  width="800px" height="500px" alt="..." src="https://www.sothebysrealty-france.com/datas/biens/images/21860/21860_00-2022-03-12-0305.jpg." class="d-block w-100" alt="...">
-    </div>
-    <div class="carousel-item">
-      <img  width="800px" height="500px" src="http://www.book-a-flat.com/magazine/wp-content/uploads/2018/01/vivre-appartements-paris-sous-les-toits.jpg" class="d-block w-100" alt="...">
-    </div>
-  </div>
-  <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleFade" data-bs-slide="prev">
-    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-    <span class="visually-hidden">Previous</span>
-  </button>
-  <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleFade" data-bs-slide="next">
-    <span class="carousel-control-next-icon" aria-hidden="true"></span>
-    <span class="visually-hidden">Next</span>
-  </button>
-</div>
-    <table class="table">
-        <tbody>
- 
-            <tr>
-                <th>Ville</th>
-                <td>{{ appart.ville }}</td>
-            </tr>
-            <tr>
-                <th>Adresse</th>
-                <td>{{ appart.adresse }}</td>
-            </tr>
-            <tr>
-                <th>Code_postal</th>
-                <td>{{ appart.codePostal }}</td>
-            </tr>
-            <tr>
-                <th>Places disponibles</th>
-                <td>{{ appart.placesDisponibles }}</td>
-            </tr>
-        </tbody>
-    </table>
-<div align="center"><a class="btn btn-outline-secondary" href="{{ path('app_connection', {'id': appart.id}) }}">Reserver</a></div>
-    
-
-{#     <a href="{{ path('app_appart_crud_index') }}">back to list</a>
-
-    <a href="{{ path('app_appart_crud_edit', {'id': appart.id}) }}">edit</a>
- #}
-    {# {{ include('appart_crud/_delete_form.html.twig') }} #}
+{% block title %}
+	Appart
 {% endblock %}
 
+{% block body %}
+	<h1>
+		Appart
+	</h1>
 
+	<table class="table">
+		<tbody>
+			<tr>
+				<th>
+					Id
+				</th>
+				<td>
+					{{ appart.id }}
+				</td>
+			</tr>
+			<tr>
+				<th>
+					Ville
+				</th>
+				<td>
+					{{ appart.ville }}
+				</td>
+			</tr>
+			<tr>
+				<th>
+					Adresse
+				</th>
+				<td>
+					{{ appart.adresse }}
+				</td>
+			</tr>
+			<tr>
+				<th>
+					Code_postal
+				</th>
+				<td>
+					{{ appart.codePostal }}
+				</td>
+			</tr>
+			<tr>
+				<th>
+					Places_disponibles
+				</th>
+				<td>
+					{{ appart.placesDisponibles }}
+				</td>
+			</tr>
+		</tbody>
+	</table>
+	<div>
+		{{ include('reservation/__reservation-create.html.twig')}}
+	</div>
+
+	<a href="{{ path('app_appart_crud_index') }}">back to list</a>
+
+	<a href="{{ path( 'app_appart_crud_edit', { id: appart.id } ) }}">
+		edit
+	</a>
+
+	{{ include('appart_crud/_delete_form.html.twig') }}
+{% endblock %}

@@ -133,12 +133,16 @@
             "version": "1.0",
             "ref": "9d254a22efca7264203eea98b866f16f944b2f09"
 <<<<<<< HEAD
+<<<<<<< HEAD
 
         }
+=======
+>>>>>>> 1b19a5f96b3c079ed4e1423b78aefa05d141660d
         },
         "files": [
             "./public/.htaccess"
         ]
+<<<<<<< HEAD
         }
     },
     "symfony/asset": {
@@ -149,6 +153,8 @@
             "public/.htaccess"
         ]
 >>>>>>> 76d8218816d0f8d3a213b0319d874a23231498d6
+=======
+>>>>>>> 1b19a5f96b3c079ed4e1423b78aefa05d141660d
     },
     "symfony/cache": {
         "version": "v6.0.6"
