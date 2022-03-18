@@ -1,12 +1,15 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Logement
+{% block title %}
+  Logement
 {% endblock %}
 
 {% block body %}
-	<h1>Logement disponible</h1>
+  <h1>
+    Logement disponible
+  </h1>
 
-	{#<table class="table">
+  {#<table class="table">
 															<thead>
 																<tr>
 																	<th>Id</th>
@@ -38,23 +41,42 @@
 															</tbody>
 														</table>#}
 
-	<div class="row row-cols-1 row-cols-md-3 g-4">
-		{% for appart in apparts %}
-			<div class="col">
-				<div class="card">
-					<img src="https://www.residence-nemea.com/upload/hotel_residence_universe/355/main/25347.jpg" class="card-img-top" alt="...">
-					<div class="card-body">
-						<h5 class="card-title">{{ appart.ville }}</h5>
+  <div class="row row-cols-1 row-cols-md-3 g-4">
+    {% for appart in apparts %}
+      <div class="col">
+        <div class="card">
+          <a href="{{
+            path(
+              'app_appart_crud_show',
+              {
+                id: appart.id
+              }
+            )
+            }}">
+            <img src="https://www.residence-nemea.com/upload/hotel_residence_universe/355/main/25347.jpg"
+              class="card-img-top"
+              alt="..." />
+          </a>
+          <div class="card-body">
+            <h5 class="card-title">
+              {{ appart.ville }}
+            </h5>
 
-						<p class="card-text">{{ appart.adresse}}</p>
-						<p class="card-text">{{ appart.codePostal}}</p>
-						<p class="card-text">{{ appart.placesDisponibles }}</p>
-						<p class="card-text">
-							<small class="text-muted">Disponible</small>
-						</p>
-					</div>
-				</div>
-			</div>
-		{% endfor %}
-	</div>
+            <p class="card-text">
+              {{ appart.adresse }}
+            </p>
+            <p class="card-text">
+              {{ appart.codePostal }}
+            </p>
+            <p class="card-text">
+              {{ appart.placesDisponibles }}
+            </p>
+            <p class="card-text">
+              <small class="text-muted">Disponible</small>
+            </p>
+          </div>
+        </div>
+      </div>
+    {% endfor %}
+  </div>
 {% endblock %}
